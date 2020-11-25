@@ -1,0 +1,64 @@
+The long way to do it 
+
+
+const form = document.getElementById("form");
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const password2 = document.getElementById("password2");
+
+// 1 thing we gonna do form is add an event listener when we submit it
+form.addEventListener("submit", function (e) {
+  console.log("submit");
+  e.preventDefault();
+  // we gonna use if statement for our enter and show the error message when there is nothing
+  if (username.value === "") {
+    showError(username, "username is required");
+  } else {
+    showSuccess(username);
+  }
+
+  if (email.value === "") {
+    showError(email, "email is required");
+  } else if (!validateEmail(email.value)) {
+    showError(email, "Email is not valid");
+  } else {
+    showSuccess(email);
+  }
+
+  if (password.value === "") {
+    showError(password, "password is required");
+  } else {
+    showSuccess(password);
+  }
+
+  if (username.value === "") {
+    showError(password2, "password 2 is required");
+  } else {
+    showSuccess(password2);
+  }
+});
+
+// 2 we gonna create our showseccus and showerror
+
+function showError(input, message) {
+  // we want to get the form-control dive of the input which is the parentElement
+  const formControl = input.parentElement;
+  formControl.className = "form-container error";
+  //show our actual message instede of error message
+  const small = formControl.querySelector("small");
+
+  small.innerText = message; // username required in our add event listener message
+}
+
+// our success
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = "form-container success";
+}
+
+//3 check if email is valid from STACKOVERFLOW
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
